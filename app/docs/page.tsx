@@ -21,6 +21,12 @@ export default async function DocsHome() {
         Guides for running SethuCMS, working in the admin app and building on
         the API. Start with “Start here”.
       </p>
+      <p className="sub">
+        Prefer to watch?{' '}
+        <Link href="/demos">Five short videos with a voice</Link> show how to
+        create, update and delete a record, put SethuCMS on your website and
+        edit these docs without a redeploy.
+      </p>
       {[...DOC_GROUPS, { title: 'More', text: 'Newer guides and notes.', slugs: [] }].map((group) => (
         docs.some((doc) => doc.group === group.title) && (
         <section key={group.title} className="pkg-group">

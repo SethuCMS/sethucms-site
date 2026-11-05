@@ -1,10 +1,12 @@
-import { LINKS, PACKAGE_GROUPS } from '@/lib/content';
+import { LINKS } from '@/lib/content';
+import { getPackageGroups } from '@/lib/site-content';
 
 /**
  * The npm packages, in plain words. Each one links to its npm page and shows
  * the command that installs it. `page` is true on the Packages page itself.
  */
-export function Packages({ page = false }: { page?: boolean }) {
+export async function Packages({ page = false }: { page?: boolean }) {
+  const groups = await getPackageGroups();
   return (
     <section>
       <div className="kicker">Packages</div>
@@ -19,7 +21,7 @@ export function Packages({ page = false }: { page?: boolean }) {
         command. You can browse all of them on{' '}
         <a href={LINKS.npm}>the SethuCMS npm page</a>.
       </p>
-      {PACKAGE_GROUPS.map((group) => (
+      {groups.map((group) => (
         <div key={group.title} className="pkg-group">
           <h2 className="group-title">{group.title}</h2>
           <p className="muted">{group.text}</p>

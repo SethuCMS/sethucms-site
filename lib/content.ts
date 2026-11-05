@@ -219,6 +219,7 @@ export const DOC_GROUPS: Array<{
       '36-tutorial-your-first-site',
       '34-put-it-on-your-website',
       '37-tutorial-move-from-sanity',
+      '38-edit-these-docs-in-sethucms',
     ],
   },
   {
@@ -286,6 +287,7 @@ export const DOCS_MENU: Array<{
   { slug: '36-tutorial-your-first-site', label: 'Tutorial: your first site', isNew: true },
   { slug: '34-put-it-on-your-website', label: 'Put it on your website', isNew: true },
   { slug: '37-tutorial-move-from-sanity', label: 'Tutorial: move from Sanity', isNew: true },
+  { slug: '38-edit-these-docs-in-sethucms', label: 'Edit these docs in SethuCMS', isNew: true },
   { slug: '25-use-from-your-app', label: 'Use it from your app' },
   { slug: '30-workspaces', label: 'Projects and workspaces', isNew: true },
   { slug: '29-schema-as-code', label: 'Schema as code', isNew: true },

@@ -6,16 +6,20 @@ import { allDocs, getDoc } from '@/lib/docs';
 
 type Params = { params: Promise<{ slug: string }> };
 
-/** Only the guides that exist are pages; any other address is a 404. */
-export const dynamicParams = false;
+/**
+ * Guides written in SethuCMS after the last deploy are built on first visit,
+ * then refreshed at most once a minute. Unknown addresses are still a 404.
+ */
+export const revalidate = 60;
+export const dynamicParams = true;
 
-export function generateStaticParams() {
-  return allDocs().map((doc) => ({ slug: doc.slug }));
+export async function generateStaticParams() {
+  return (await allDocs()).map((doc) => ({ slug: doc.slug }));
 }
 
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { slug } = await params;
-  const doc = getDoc(slug);
+  const doc = await getDoc(slug);
   return doc
     ? { title: `${doc.title} · SethuCMS docs`, description: doc.summary }
     : {};
@@ -24,7 +28,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
 /** One guide, with the list of all guides beside it. */
 export default async function GuidePage({ params }: Params) {
   const { slug } = await params;
-  const doc = getDoc(slug);
+  const doc = await getDoc(slug);
   if (!doc) {
     notFound();
   }

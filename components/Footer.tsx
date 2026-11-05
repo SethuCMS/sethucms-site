@@ -9,6 +9,7 @@ export function Footer() {
         <a href={LINKS.github}>GitHub</a>
         <Link href="/docs">Docs</Link>
         <Link href="/packages">Packages</Link>
+        <Link href="/demos">Demos</Link>
         <a href={LINKS.npm}>npm</a>
         <a href={LINKS.admin}>Admin</a>
       </nav>

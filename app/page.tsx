@@ -9,6 +9,9 @@ import {
   WhatsNew,
 } from '@/components/Sections';
 
+/** Words may come from SethuCMS, so look again at most once a minute. */
+export const revalidate = 60;
+
 /** The home page: every part is a component, in reading order. */
 export default function Home() {
   return (

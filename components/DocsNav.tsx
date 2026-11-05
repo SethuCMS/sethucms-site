@@ -3,8 +3,8 @@ import { DOC_GROUPS } from '@/lib/content';
 import { allDocs } from '@/lib/docs';
 
 /** The list of every guide, grouped, shown beside each guide. */
-export function DocsNav({ current }: { current?: string }) {
-  const docs = allDocs();
+export async function DocsNav({ current }: { current?: string }) {
+  const docs = await allDocs();
   const groups = [...DOC_GROUPS.map((group) => group.title), 'More'];
   return (
     <nav className="docs-nav" aria-label="Guides">

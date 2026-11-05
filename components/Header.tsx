@@ -18,6 +18,7 @@ export function Header() {
         <Link href="/#new">What’s new</Link>
         <Link href="/#security">Security</Link>
         <Link href="/packages">Packages</Link>
+        <Link href="/demos">Demos</Link>
         <div className="menu">
           <Link href="/docs" aria-haspopup="true">
             Docs

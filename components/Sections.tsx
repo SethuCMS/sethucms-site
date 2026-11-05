@@ -1,11 +1,5 @@
-import {
-  DATABASES,
-  LINKS,
-  SECURITY,
-  STEPS,
-  WHATS_NEW,
-  type Card,
-} from '@/lib/content';
+import { DATABASES, LINKS, STEPS, type Card } from '@/lib/content';
+import { getSecurity, getWhatsNew } from '@/lib/site-content';
 
 /** A grid of cards; the highlighted one gets the lime background. */
 function CardGrid({ cards }: { cards: Card[] }) {
@@ -52,7 +46,8 @@ export function HowItWorks() {
 }
 
 /** Recent additions. */
-export function WhatsNew() {
+export async function WhatsNew() {
+  const cards = await getWhatsNew();
   return (
     <section className="block" id="new" style={{ paddingTop: 0 }}>
       <div className="kicker">What’s new</div>
@@ -61,17 +56,18 @@ export function WhatsNew() {
         Recent additions. Each one is covered by tests; the hosted pieces are
         still being tried on a real deployment.
       </p>
-      <CardGrid cards={WHATS_NEW} />
+      <CardGrid cards={cards} />
     </section>
   );
 }
 
-export function Security() {
+export async function Security() {
+  const cards = await getSecurity();
   return (
     <section className="block" id="security" style={{ paddingTop: 0 }}>
       <div className="kicker">Security first</div>
       <h2 className="title">Built so the safe way is the default.</h2>
-      <CardGrid cards={SECURITY} />
+      <CardGrid cards={cards} />
     </section>
   );
 }

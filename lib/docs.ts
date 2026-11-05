@@ -1,9 +1,18 @@
 /**
- * Reads the guides in content/docs (copies of the markdown in the
- * sethucms-docs repository; `pnpm sync-docs` refreshes them).
+ * Reads the guides. They come from two places:
+ *
+ * 1. SethuCMS (the "docs" collection), when SETHUCMS_BASE_URL and
+ *    SETHUCMS_VIEWER_TOKEN are set. Edit a guide in the editor, press
+ *    Publish, and the site shows it within a minute. No redeploy.
+ * 2. content/docs (copies of the markdown in the sethucms-docs repository;
+ *    `pnpm sync-docs` refreshes them). Used when SethuCMS is not set up or
+ *    cannot be reached, and for any guide not yet in SethuCMS.
+ *
+ * A guide in SethuCMS wins over the file with the same address (slug).
  */
 import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { cmsRows } from '@/lib/cms';
 import { DOC_GROUPS } from '@/lib/content';
 
 const DOCS_DIR = join(process.cwd(), 'content', 'docs');
@@ -76,15 +85,53 @@ function read(file: string): Doc {
   };
 }
 
-/** Every guide, in number order. */
-export function allDocs(): Doc[] {
+/** Guides from the files. */
+function fileDocs(): Doc[] {
   return readdirSync(DOCS_DIR)
     .filter((file) => FILE.test(file))
     .sort()
     .map(read);
 }
 
+/** One record as the gateway returns it. */
+type Row = Record<string, unknown>;
+
+/** Turn a record from the "docs" collection into a guide, or null if unusable. */
+function fromRow(row: Row): Doc | null {
+  const slug = typeof row.slug === 'string' ? row.slug.trim() : '';
+  const title = typeof row.title === 'string' ? row.title.trim() : '';
+  if (!/^[a-z0-9-]+$/.test(slug) || title === '') {
+    return null;
+  }
+  const body = typeof row.body === 'string' ? row.body.trim() : '';
+  const number =
+    typeof row.number === 'number' ? row.number : Number(slug.slice(0, 2)) || 99;
+  return {
+    slug,
+    number,
+    title: cleanTitle(title),
+    summary: firstParagraph(body),
+    group: groupOf(slug),
+    body,
+  };
+}
+
+/** Every guide in SethuCMS. Empty when it is not set up or unreachable. */
+async function cmsDocs(): Promise<Doc[]> {
+  const rows = await cmsRows(process.env.SETHUCMS_DOCS_COLLECTION || 'docs');
+  return (rows ?? []).map(fromRow).filter((doc): doc is Doc => doc !== null);
+}
+
+/** Every guide, in number order: SethuCMS first, files fill the gaps. */
+export async function allDocs(): Promise<Doc[]> {
+  const fromCms = await cmsDocs();
+  const taken = new Set(fromCms.map((doc) => doc.slug));
+  return [...fromCms, ...fileDocs().filter((doc) => !taken.has(doc.slug))].sort(
+    (a, b) => a.number - b.number || a.slug.localeCompare(b.slug),
+  );
+}
+
 /** One guide by its address, or undefined. */
-export function getDoc(slug: string): Doc | undefined {
-  return allDocs().find((doc) => doc.slug === slug);
+export async function getDoc(slug: string): Promise<Doc | undefined> {
+  return (await allDocs()).find((doc) => doc.slug === slug);
 }

@@ -138,3 +138,5 @@ nav.links .menu-panel .menu-all{margin-top:4px;border-top:1px solid var(--line);
 .diagram svg{max-width:100%;height:auto}
 .diagram-wait{color:var(--soft);font-size:.9rem;text-align:left}
 .diagram-wait pre{margin:10px 0 0;text-align:left}
+.demo-list{display:grid;gap:44px;margin-top:40px}
+.demo video{width:100%;max-width:880px;margin-top:14px;border-radius:18px;border:1px solid var(--line);background:#000;display:block}

@@ -9,8 +9,10 @@ export const metadata: Metadata = {
 };
 
 /** The Docs home: every guide, grouped by what you want to do. */
-export default function DocsHome() {
-  const docs = allDocs();
+export const revalidate = 60;
+
+export default async function DocsHome() {
+  const docs = await allDocs();
   return (
     <div className="wrap page">
       <div className="kicker">Docs</div>
@@ -19,7 +21,8 @@ export default function DocsHome() {
         Guides for running SethuCMS, working in the admin app and building on
         the API. Start with “Start here”.
       </p>
-      {DOC_GROUPS.map((group) => (
+      {[...DOC_GROUPS, { title: 'More', text: 'Newer guides and notes.', slugs: [] }].map((group) => (
+        docs.some((doc) => doc.group === group.title) && (
         <section key={group.title} className="pkg-group">
           <h2 className="group-title">{group.title}</h2>
           <p className="muted">{group.text}</p>
@@ -38,6 +41,7 @@ export default function DocsHome() {
               ))}
           </div>
         </section>
+        )
       ))}
     </div>
   );

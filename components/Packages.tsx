@@ -35,7 +35,9 @@ export function Packages({ page = false }: { page?: boolean }) {
                   </a>
                 </h3>
                 <p>{item.text}</p>
-                <code className="install">npm install {item.name}</code>
+                <code className="install">
+                  {item.command ?? `npm install ${item.name}`}
+                </code>
               </div>
             ))}
           </div>

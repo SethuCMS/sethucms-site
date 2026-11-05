@@ -11,7 +11,8 @@ pnpm typecheck
 
 - Pages: Home, `/packages`, `/docs` and one page per guide (`/docs/<guide>`).
   The guides are copies of the markdown in the sethucms-docs repository; run
-  `pnpm sync-docs` to refresh them.
+  `pnpm sync-docs` to refresh them. Guides 34 to 37 are the tutorials
+  (one command, first site, put it on your website, move from Sanity).
 - Words live in `lib/content.ts`; layout in `components/`; styles in
   `app/globals.css`.
 - Security headers (including a strict Content-Security-Policy) are set in

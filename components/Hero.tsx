@@ -36,6 +36,9 @@ export function Hero() {
             Open the admin
           </a>
         </div>
+        <code className="install" style={{ marginTop: 22, maxWidth: 360 }}>
+          npm create sethucms@latest
+        </code>
         <div className="facts">
           <span>
             <b>Your data</b> never passes through us

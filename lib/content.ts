@@ -35,9 +35,21 @@ export const STEPS: Array<{ title: string; text: string }> = [
 
 export const WHATS_NEW: Card[] = [
   {
+    title: 'Start with one command',
+    text: 'npm create sethucms@latest asks a few questions, checks your gateway and writes a working client for a new or existing project, in TypeScript or JavaScript.',
+    lime: true,
+  },
+  {
+    title: 'Counts, singletons and scheduling',
+    text: 'See how many records each collection has, keep one-of-a-kind pages such as site settings as a single record, and publish a draft at a time you choose.',
+  },
+  {
+    title: 'Allow your site in one click',
+    text: 'A CORS origins page lists the websites that may call the gateway and shows the ones that were refused, so a blocked editor is a one-click fix.',
+  },
+  {
     title: 'Projects',
     text: 'One person can have several projects, each with its own connections, people and content, and switch between them from the sidebar. Invite teammates by e-mail.',
-    lime: true,
   },
   {
     title: 'Schema as code',
@@ -113,6 +125,8 @@ export const DATABASES: Array<{ name: string; level: Level; label: string }> = [
 export interface Package {
   name: string;
   text: string;
+  /** What to type to use it; defaults to `npm install <name>`. */
+  command?: string;
 }
 
 /** Packages, grouped by what a person wants to do with them. */
@@ -125,6 +139,11 @@ export const PACKAGE_GROUPS: Array<{
     title: 'Use SethuCMS in your app',
     text: 'Read and write content from your website or app.',
     packages: [
+      {
+        name: 'create-sethucms',
+        text: 'Set up a new or existing project with questions in your terminal: Next.js, Express or Node, in TypeScript or JavaScript.',
+        command: 'npm create sethucms@latest',
+      },
       {
         name: '@sethucms/sdk',
         text: 'The TypeScript client for the SethuCMS API. Works in Node 20 or newer, browsers and edge runtimes.',
@@ -196,6 +215,10 @@ export const DOC_GROUPS: Array<{
       '14-build-and-run',
       '26-hosted-gateway',
       '25-use-from-your-app',
+      '35-start-with-one-command',
+      '36-tutorial-your-first-site',
+      '34-put-it-on-your-website',
+      '37-tutorial-move-from-sanity',
     ],
   },
   {
@@ -259,6 +282,10 @@ export const DOCS_MENU: Array<{
   isNew?: boolean;
 }> = [
   { slug: '28-run-it-yourself', label: 'Run it yourself' },
+  { slug: '35-start-with-one-command', label: 'Start with one command', isNew: true },
+  { slug: '36-tutorial-your-first-site', label: 'Tutorial: your first site', isNew: true },
+  { slug: '34-put-it-on-your-website', label: 'Put it on your website', isNew: true },
+  { slug: '37-tutorial-move-from-sanity', label: 'Tutorial: move from Sanity', isNew: true },
   { slug: '25-use-from-your-app', label: 'Use it from your app' },
   { slug: '30-workspaces', label: 'Projects and workspaces', isNew: true },
   { slug: '29-schema-as-code', label: 'Schema as code', isNew: true },

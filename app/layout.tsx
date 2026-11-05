@@ -1,3 +1,4 @@
+import { Analytics } from '@vercel/analytics/next';
 import type { Metadata, Viewport } from 'next';
 import type { ReactNode } from 'react';
 import { Footer } from '@/components/Footer';
@@ -30,6 +31,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <div className="wrap">
           <Footer />
         </div>
+        {/* Page views, counted by Vercel. No cookies, no personal data. */}
+        <Analytics />
       </body>
     </html>
   );
